@@ -9,6 +9,8 @@ const {auth} = require('../../middlewares/auth')
 
 router.post('/signup', controllerWrapper(authController.signupController))
 
+router.post("/login", controllerWrapper(authController.loginController));
+
 router.get("/logout", auth, controllerWrapper(authController.logoutController));
 
 module.exports = router;
