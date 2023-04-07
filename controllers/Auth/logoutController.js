@@ -4,6 +4,4 @@ const logoutController = async (req, res) => {
   res.status(204).json({ message: "No Content" });
 };
 
-module.exports = {
-  logoutController,
-};
+module.exports = logoutController;
