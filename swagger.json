@@ -13,7 +13,7 @@
   "produces": ["application/json"],
   "servers": [
     { "url": "http://localhost:3000" },
-    { "url": "https://walletproject.onrender.com/" }
+    { "url": "https://walletproject.onrender.com" }
   ],
   "tags": [
     {
@@ -129,12 +129,28 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
                 }
               }
             }
@@ -153,7 +169,7 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -161,6 +177,22 @@
                   "type": "array",
                   "description": "List of transactions",
                   "items": { "$ref": "#/components/schemas/Transaction" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
                 }
               }
             }
@@ -177,7 +209,7 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Add new transaction",
+          "description": "Ttransaction's object",
           "required": true,
           "content": {
             "application/json": {
@@ -196,6 +228,38 @@
                   "type": "array",
                   "description": "List of user's transactions",
                   "items": { "$ref": "#/components/schemas/Transaction" }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Missing required field"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
                 }
               }
             }
@@ -367,7 +431,7 @@
           },
           "category": {
             "type": "string",
-            "description": "Category ID",
+            "description": "CategoryID",
             "example": "62496a0a7bcc73d5fda678ec"
           },
           "name": {
