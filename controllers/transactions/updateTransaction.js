@@ -20,4 +20,4 @@ const updateTransaction = async (req, res, next) => {
   }
 };
 
-module.exports = { updateTransaction };
+module.exports = updateTransaction;

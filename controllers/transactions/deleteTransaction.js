@@ -11,4 +11,4 @@ const deleteTransaction = async (req, res, next) => {
   }
 };
 
-module.exports = { deleteTransaction };
+module.exports = deleteTransaction;

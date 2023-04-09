@@ -12,4 +12,4 @@ const createTransaction = async (req, res, next) => {
   res.status(201).json({ data: transaction });
 };
 
-module.exports = { createTransaction };
+module.exports = createTransaction;
