@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema({
@@ -40,7 +39,7 @@ const TransactionSchema = new mongoose.Schema({
   },
 });
 
-const Transaction = model("Transaction", TransactionSchema);
+const Transaction = mongoose.model("Transaction", TransactionSchema);
 
 module.exports = {
   Transaction,
