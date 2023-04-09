@@ -14,10 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Name is required"],
   },
-  // token: {
-  //   type: String,
-  //   default: '',
-  // },
+  token: {
+    type: String,
+    default: "",
+  },
 });
 
 const User = mongoose.model("User", UserSchema);
