@@ -7,7 +7,7 @@ const { auth } = require("../../middlewares/auth");
 
 router.post("/", controllerWrapper(authController.signupController));
 
-router.post("/login", controllerWrapper(authController.loginController));
+router.post("/login",  controllerWrapper(authController.loginController));
 
 router.get("/logout", auth, controllerWrapper(authController.logoutController));
 
