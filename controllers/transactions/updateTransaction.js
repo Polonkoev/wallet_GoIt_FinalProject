@@ -10,7 +10,8 @@ const updateTransaction = async (req, res, next) => {
 
   const transaction = await Transaction.findByIdAndUpdate(
     req.params.transactionId,
-    body
+    body,
+    { new: true }
   );
 
   if (transaction) {
