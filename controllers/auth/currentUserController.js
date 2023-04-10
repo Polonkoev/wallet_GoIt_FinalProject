@@ -16,7 +16,7 @@ const currentUserController = async (req, res) => {
         id: user._id,
       },
       SECRET,
-      { expiresIn: "30d" }
+      { expiresIn: "1h" }
     );
 
     res.json({ email, name, balance });
