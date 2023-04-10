@@ -1,17 +1,18 @@
-const { getTransactions } = require("../../services/getTransactions");
 
+const { Transaction } = require("../../models/Transactions");
 
 const getTransactionController = async (req, res) => {
-  try {
-    const { _id } = req.user;
 
-    const transactions = await getTransactions(_id);
+  
+  const { _id: owner } = req.user;
+  const allTransactions = await Transaction.find({ owner: owner });
 
-    res.status(200).json({ transactions });
-  } catch (error) {
-    res.status(400).json({ message: `${error.message}` });
+  if (!allTransactions) {
+    res.status(404, "Not found");
   }
+  return res.status(200).json({ data: allTransactions });
 };
+
 
 module.exports = {
   getTransactionController,
