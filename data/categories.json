@@ -1,0 +1,11 @@
+[
+  { "id": "1", "category": "main expenses" },
+  { "id": "2", "category": "products" },
+  { "id": "3", "category": "car" },
+  { "id": "4", "category": "self care" },
+  { "id": "5", "category": "child care" },
+  { "id": "6", "category": "household products" },
+  { "id": "7", "category": "education" },
+  { "id": "8", "category": "leisure" },
+  { "id": "9", "category": "other expenses" }
+]
