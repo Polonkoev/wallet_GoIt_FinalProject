@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
     const { authorization = "" } = req.headers;
     const [bearer, token] = authorization.split(" ");
 
-    if ((!user || err, user.token !== token)) {
+    if (!user || err || user.token !== token) {
       return res.status(401).json({
         status: "error",
         code: 401,
