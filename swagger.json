@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Wallet API",
     "description": "Final project GoIT 1 team",
     "license": {
@@ -176,7 +176,9 @@
                 "schema": {
                   "type": "array",
                   "description": "List of transactions",
-                  "items": { "$ref": "#/components/schemas/Transaction" }
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionResponse"
+                  }
                 }
               }
             }
@@ -214,7 +216,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionRequest"
+                "$ref": "#/components/schemas/TransactionResponse"
               }
             }
           }
@@ -227,7 +229,9 @@
                 "schema": {
                   "type": "array",
                   "description": "List of user's transactions",
-                  "items": { "$ref": "#/components/schemas/Transaction" }
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionResponse"
+                  }
                 }
               }
             }
@@ -271,6 +275,139 @@
         }
       }
     },
+    "/transactions/{transactionId}": {
+      "put": {
+        "tags": ["Transactions"],
+        "summary": "Updating transaction by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transactionId",
+            "required": true,
+            "description": "Transaction ID",
+            "schema": {
+              "type": "string",
+              "example": "628682f56ae1b0812d14a878"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Update transaction",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getTransactionSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response",
+            "content": {}
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Deleting transaction by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transactionId",
+            "required": true,
+            "description": "Transaction ID",
+            "schema": {
+              "type": "string",
+              "example": "628682f56ae1b0812d14a878"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Bad request response",
+            "content": {}
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Getting transaction by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transactionId",
+            "required": true,
+            "description": "Transaction ID",
+            "schema": {
+              "type": "string",
+              "example": "628682f56ae1b0812d14a878"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getTransactionSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response",
+            "content": {}
+          },
+
+          "404": {
+            "description": "Transaction not found",
+            "content": {}
+          }
+        }
+      }
+    },
 
     "/api/categories/": {
       "get": {
@@ -285,7 +422,9 @@
                 "schema": {
                   "type": "array",
                   "description": "List of categories",
-                  "items": { "$ref": "#/components/schemas/Categories" }
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriesResponse"
+                  }
                 }
               }
             }
@@ -324,7 +463,9 @@
                 "schema": {
                   "type": "array",
                   "description": "List of categories",
-                  "items": { "$ref": "#/components/schemas/Categories" }
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriesResponse"
+                  }
                 }
               }
             }
@@ -335,126 +476,206 @@
           }
         }
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "RegistrationRequest": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "format": "name"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+    },
+
+    "components": {
+      "schemas": {
+        "RegistrationRequest": {
+          "type": "object",
+          "required": ["name", "email", "password"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "format": "name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "qwerty123"
+            }
           }
-        }
-      },
-      "AuthResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's token",
-            "format": "JWT"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "format": "name"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
+        },
+        "AuthResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "JWT"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "format": "name"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email"
+                }
               }
+            }
+          }
+        },
+        "LoginRequest": {
+          "type": "object",
+          "required": ["email", "password"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "qwerty123"
+            }
+          }
+        },
+        "CurrentResponse": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "User's _id",
+              "example": "62496a0a7bcc73d5fda678ec"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "format": "name"
+            }
+          }
+        },
+        "createTransactionSuccessResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "Operation status",
+              "example": "success"
+            },
+            "code": {
+              "type": "integer",
+              "description": "HTTP code",
+              "example": 201
+            },
+            "data": {
+              "type": "object",
+              "description": "Information about created transaction",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Transaction ID",
+                  "example": "6042f456e080193948016539"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Transaction's date indicated by user",
+                  "example": "2022-05-17"
+                },
+                "income": {
+                  "type": "boolean",
+                  "description": "Is transaction income",
+                  "example": false
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category of transaction",
+                  "example": "Beverages"
+                },
+                "comment": {
+                  "type": "string",
+                  "description": "User's comment about transaction",
+                  "example": "Comment"
+                },
+                "sum": {
+                  "type": "integer",
+                  "description": "Sum of transaction",
+                  "example": 2120
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Date of entry creation",
+                  "example": "2023-04-10T17:51:48.716Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "Date of entry update",
+                  "example": "2023-04-10T17:51:48.716Z"
+                }
+              }
+            }
+          }
+        },
+        "TransactionResponse": {
+          "type": "object",
+          "required": ["date", "category", "sum"],
+          "properties": {
+            "type": {
+              "type": "boolean",
+              "example": false
+            },
+            "category": {
+              "type": "string",
+              "description": "Category ID",
+              "example": "62496a0a7bcc73d5fda678ec"
+            },
+            "name": {
+              "type": "string",
+              "description": "Category name",
+              "example": "Salary"
+            },
+            "date": {
+              "type": "string",
+              "description": "Transaction date in YYYY-MM-DD format",
+              "example": "2023-02-05"
+            },
+            "amount": {
+              "type": "number",
+              "example": 1097
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        },
+        "CategoriesResponse": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Eat"
+            },
+            "id": {
+              "type": "string",
+              "example": "54362576gjhVNHVG87867"
             }
           }
         }
       },
-      "LoginRequest": {
-        "required": ["email", "password"],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          }
-        }
-      },
 
-      "CurrentResponse": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "description": "User's _id",
-            "example": "62496a0a7bcc73d5fda678ec"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "format": "name"
-          }
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
         }
-      },
-      "Transaction": {
-        "type": "object",
-        "properties": {
-          "isExpense": {
-            "type": "boolean",
-            "example": false
-          },
-          "category": {
-            "type": "string",
-            "description": "CategoryID",
-            "example": "62496a0a7bcc73d5fda678ec"
-          },
-          "name": {
-            "type": "string",
-            "description": "Cetegory name",
-            "example": "Salary"
-          },
-          "amount": {
-            "type": "number",
-            "example": 10.97
-          },
-          "comment": {
-            "type": "string"
-          }
-        }
-      }
-    },
-
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
     }
   }
