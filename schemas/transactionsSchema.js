@@ -18,7 +18,8 @@ const addTransaction = Joi.object({
     "household products",
     "education",
     "leisure",
-    "other expenses"
+    "other expenses",
+    "income"
   ),
   comment: Joi.string(),
 });
@@ -42,7 +43,8 @@ const editTransaction = Joi.object({
     "household products",
     "education",
     "leisure",
-    "other expenses"
+    "other expenses",
+    "income"
   ),
   comment: Joi.string(),
 }).min(1);
