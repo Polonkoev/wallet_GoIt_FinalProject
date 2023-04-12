@@ -5,7 +5,7 @@ const { User } = require("../../models/User");
 const { SECRET } = process.env;
 
 const login = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
 
   const user = await User.findOne({ email });
   const compareResult = await bcrypt.compare(password, user.password);
