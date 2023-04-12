@@ -11,8 +11,8 @@ const TransactionSchema = new mongoose.Schema({
     required: [true, "Amount is required"],
   },
   date: {
-    type: String,
-    default: new Date().toLocaleString(),
+    type: Date,
+    default: Date.now,
   },
   category: {
     type: String,
@@ -26,8 +26,9 @@ const TransactionSchema = new mongoose.Schema({
       "Education",
       "Leisure",
       "other expenses",
+      "Income",
     ],
-    default: "other expenses",
+    default: "Income",
   },
   comment: {
     type: String,
@@ -38,6 +39,19 @@ const TransactionSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
+  month: {
+    type: Number,
+  },
+  year: {
+    type: Number,
+  },
+});
+
+TransactionSchema.pre("save", function (next) {
+  const date = new Date(this.date);
+  this.month = date.getMonth() + 1;
+  this.year = date.getFullYear();
+  next();
 });
 
 const Transaction = mongoose.model("Transaction", TransactionSchema);

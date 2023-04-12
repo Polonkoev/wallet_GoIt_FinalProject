@@ -4,6 +4,8 @@ const transactionSchema = Joi.object({
   type: Joi.boolean().required(),
   amount: Joi.number().positive().required(),
   date: Joi.string(),
+  month: Joi.number(),
+  year: Joi.number(),
   category: Joi.string().valid(
     "Main expenses",
     "Products",
@@ -13,7 +15,8 @@ const transactionSchema = Joi.object({
     "Household products",
     "Education",
     "Leisure",
-    "other expenses"
+    "other expenses",
+    "Income"
   ),
   comment: Joi.string(),
   owner: Joi.string().required(),
