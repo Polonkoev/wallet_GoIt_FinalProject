@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const getCurrency = async (req, res, next) => {
   await axios
-    .get("https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11кк")
+    .get("https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11")
     .then((response) => {
       const currency = response.data;
       res.status(200).json({ currency });
