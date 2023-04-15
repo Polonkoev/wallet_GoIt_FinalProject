@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "title": "Wallet API",
     "description": "Final project GoIT 1 team",
     "license": {
@@ -27,6 +27,10 @@
     {
       "name": "Categories",
       "description": "Categories endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics endpoints"
     }
   ],
   "paths": {
@@ -408,6 +412,74 @@
         }
       }
     },
+    "/api/statistics": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get all statistics.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Statistics"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "code": {
+                      "type": "number",
+                      "example": "401"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Fail"
+                    },
+                    "code": {
+                      "type": "number",
+                      "example": "500"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
 
     "/api/categories/": {
       "get": {
@@ -441,7 +513,7 @@
         "security": [{ "Bearer": [] }],
 
         "requestBody": {
-          "required": true,
+          "required": false,
           "description": "New category",
           "content": {
             "application/json": {
@@ -449,7 +521,7 @@
                 "type": "object",
                 "properties": {
                   "name": { "type": "string" },
-                  "isExpense": { "type": "boolean" }
+                  "expense": { "type": "boolean" }
                 }
               }
             }
@@ -623,6 +695,7 @@
             }
           }
         },
+
         "TransactionResponse": {
           "type": "object",
           "required": ["date", "category", "sum"],
@@ -665,6 +738,36 @@
             "id": {
               "type": "string",
               "example": "54362576gjhVNHVG87867"
+            }
+          }
+        },
+        "Statistics": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "categoriesSummary": {
+                  "type": "object",
+                  "example": "Other"
+                },
+                "income": {
+                  "type": "Number",
+                  "example": 8000
+                },
+                "expense": {
+                  "type": "Number",
+                  "example": 5000
+                },
+                "month": {
+                  "type": "number",
+                  "example": 10
+                },
+                "year": {
+                  "type": "number",
+                  "example": 2023
+                }
+              }
             }
           }
         }
