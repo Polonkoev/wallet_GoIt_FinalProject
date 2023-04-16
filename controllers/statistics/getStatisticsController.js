@@ -2,7 +2,9 @@ const { Transaction } = require("../../models/Transactions");
 
 const statisticsController = async (req, res) => {
   const { _id: ownerId } = req.user;
-  const { year, month } = req.body;
+  let { year, month } = req.query;
+  year = parseInt(year);
+  month = parseInt(month);
   try {
     const pipeline = [
       {
@@ -68,6 +70,7 @@ const statisticsController = async (req, res) => {
       },
     ];
     const result = await Transaction.aggregate(pipeline);
+    console.log(result);
     if (result.length === 0) {
       return res.status(404).json({ message: "Not found" });
     }
