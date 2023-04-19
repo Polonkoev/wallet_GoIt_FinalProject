@@ -6,7 +6,7 @@ const { SECRET } = process.env;
 const currentUserController = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const { email, name, balance } = user;
+    const { email, name, balance, _id } = user;
     if (!user) {
       return res.json({ message: "There is no such user" });
     }
@@ -19,7 +19,7 @@ const currentUserController = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ email, name, balance });
+    res.json({ email, name, balance, _id });
   } catch (error) {
     res.json({ message: "Not allowed" });
   }
