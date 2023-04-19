@@ -46,8 +46,8 @@ const editTransaction = Joi.object({
     "other expenses",
     "income"
   ),
-  comment: Joi.string(),
-}).min(1);
+  comment: Joi.string().optional(),
+});
 
 module.exports = {
   addTransaction,
