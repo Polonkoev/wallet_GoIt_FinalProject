@@ -21,7 +21,7 @@ const addTransaction = Joi.object({
     "other expenses",
     "income"
   ),
-  comment: Joi.string(),
+  comment: Joi.string().optional(),
 });
 
 const editTransaction = Joi.object({
