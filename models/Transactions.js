@@ -32,7 +32,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   comment: {
     type: String,
-    default: "",
+    default: null,
   },
   owner: {
     type: Schema.Types.ObjectId,

@@ -18,7 +18,7 @@ const transactionSchema = Joi.object({
     "other expenses",
     "Income"
   ),
-  comment: Joi.string(),
+  comment: Joi.string().optional(),
   owner: Joi.string().required(),
 });
 
